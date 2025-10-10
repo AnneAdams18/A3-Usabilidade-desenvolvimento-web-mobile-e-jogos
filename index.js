@@ -2,33 +2,28 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-// Importa o roteador de categorias (deve vir antes de ser usado)
+//  Importação das Rotas
 const categoriaRoute = require('./route/categoriaRoute')
+const produtoRoute = require('./route/produtoRoute')
 
 // MIDDLEWARES GLOBAIS
-// 1. Essencial: permite que a API leia o corpo de requisições JSON
+// Permite que a API leia o corpo de requisições JSON
 app.use(express.json())
 
-// NOVO MIDDLEWARE DE LOG PARA DEBUG
-// Esta função será executada para CADA requisição e imprime o método e o caminho
+// Middleware de Log 
 app.use((req, res, next) => {
     console.log(`[DEBUG LOG] Método: ${req.method}, Caminho: ${req.path}`);
-    next(); // Continua para a próxima rota
+    next(); 
 });
 
-
-// ROTAS DE DIAGNÓSTICO
+// Rotas de diagnóstico
 app.get('/', (req, res) => {
     res.send('API do Gerenciador de estoque funcionando!')
 })
 
-// ROTA TEMPORÁRIA DE TESTE (PUT /teste)
-app.put('/teste', (req, res) => {
-    res.send('Teste PUT Funcionando!');
-})
-
-// ROTAS DA APLICAÇÃO
+// Rotas da aplicação
 app.use('/categoria', categoriaRoute)
+app.use('/produto', produtoRoute)
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`)
