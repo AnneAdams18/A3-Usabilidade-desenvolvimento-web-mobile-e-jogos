@@ -54,6 +54,47 @@ class ProdutoDAO {
             throw error
         }
     }
+
+    static async atualizar(id, produto) {
+        const {nome, preco_unitario, quantidade_estoque, quantidade_minima, quantidade_maxima, categoria_id} = produto
+
+        const query = `
+            UPDATE produto SET
+                nome = ?,
+                preco_unitario = ?,
+                quantidade_estoque = ?,
+                quantidade_minima = ?,
+                quantidade_maxima = ?,
+                categoria_id = ?
+            WHERE id = ?    
+        `
+
+        const params = [
+            nome,
+            preco_unitario,
+            quantidade_estoque,
+            quantidade_minima,
+            quantidade_maxima,
+            categoria_id,
+            id
+        ]
+
+        try {
+            const [result] = await pool.query(query, params)
+            return result.affectedRows
+        } catch (error) {
+            console.error('Erro no DAO ao atualizar produto:', error)
+            throw error
+        }
+    }
+
+    static async excluir(id) {
+        const [result] = await pool.query(
+            'DELETE FROM produto WHERE id = ?',
+            [id]
+        )
+        return result.affectedRows
+    }
 }
 
 module.exports = ProdutoDAO
