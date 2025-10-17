@@ -5,6 +5,7 @@ const port = 3000
 //  Importação das Rotas
 const categoriaRoute = require('./route/categoriaRoute')
 const produtoRoute = require('./route/produtoRoute')
+const relatorioRoute = require('./route/relatorioRoute')
 
 // MIDDLEWARES GLOBAIS
 // Permite que a API leia o corpo de requisições JSON
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 // Rotas da aplicação
 app.use('/categoria', categoriaRoute)
 app.use('/produto', produtoRoute)
+app.use('/relatorios', relatorioRoute)
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`)
